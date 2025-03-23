@@ -4,30 +4,15 @@ using UnityEngine;
 
 public class RandomItemSpawner : MonoBehaviour
 {
-    public string resourceFolder = "Items/Models"; // Folder where the items are stored
-    public GameObject[] items; // Array of items to spawn
-    // Start is called before the first frame update
-    void Start()
-    {
-        items = Resources.LoadAll<GameObject>(resourceFolder);
-    }
-
-    // Update is called once per frame
+    // Load assets from Assets/ScriptableObjects/Items
+    public GameObject[] items;
+    public ItemDatabase itemDatabase;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Delete))
         {
-            SpawnRandomItem();
+            ItemData item = itemDatabase.GetRandomItem();
+            Instantiate(item.prefab, transform.position, Quaternion.identity);
         }
-    }
-
-    void SpawnRandomItem()
-    {
-        // Get a random item from the array
-        GameObject item = items[Random.Range(0, items.Length)];
-        // Get a random position
-        Vector3 position = new Vector3(Random.Range(-10, 10), 3, Random.Range(-10, 10));
-        // Instantiate the item
-        Instantiate(item, position, item.transform.rotation);
     }
 }

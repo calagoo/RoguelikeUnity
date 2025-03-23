@@ -14,22 +14,29 @@ public class PickupHandler : MonoBehaviour
         strength = PlayerStats.Instance.strength;
     }
 
-    public void pickUpItem(float grabRange)
+    public void PickUpItem(float grabRange)
     {
         if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, grabRange))
         {
             GameObject itemGO = hit.collider.gameObject;
-
             if (itemGO.layer == 7)
             {
-                Item itemComponent = itemGO.GetComponent<Item>();
-                if (itemComponent != null)
+                ItemInstance itemInstance = itemGO.GetComponent<ItemInstance>();
+                ItemData itemData = itemInstance.GetItemData();
+                if (itemData != null)
                 {
-                    // Extract item data BEFORE destroying the GameObject
-                    inventory.AddItem(itemComponent); // Pass only the data
-
-                    Destroy(itemGO); // Safe now!
+                    inventory.AddItem(itemData);
+                    Destroy(itemGO);
                 }
+
+                // Item itemComponent = itemGO.GetComponent<Item>();
+                // if (itemComponent != null)
+                // {
+                //     // Extract item data BEFORE destroying the GameObject
+                //     inventory.AddItem(itemComponent); // Pass only the data
+                //     Debug.Log("Destroying");
+                //     Destroy(itemGO); // Safe now!
+                // }
             }
         }
     }

@@ -84,7 +84,7 @@ PrefabInstance:
       addedObject: {fileID: 535773170146946473}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bde911c751b593241bcd3a04cf9b2fad, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -6425098966448727781}
+      addedObject: {fileID: 1657828181232411811}
   m_SourcePrefab: {fileID: 100100000, guid: bde911c751b593241bcd3a04cf9b2fad, type: 3}
 --- !u!1 &4476489756669299951 stripped
 GameObject:
@@ -140,7 +140,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: bde911c751b593241bcd3a04cf9b2fad, type: 3}
---- !u!114 &-6425098966448727781
+--- !u!114 &1657828181232411811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,15 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4476489756669299951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a199d36bdd74d14986057d10ba5d15d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b36fc8efc90b8d49ad8efc0d577269f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 10kg Plate
-  itemCategory: 7
-  itemID: 0
-  itemDescription: A calibrated 10kg plate. Useful if you are too weak to use the
-    20kg weight.
-  itemValue: 7
-  isConsumable: 0
-  itemRarity: 0
-  itemWeight: 10
+  itemData: {fileID: 11400000, guid: 88b92cc74de2d714eb07dea8d1fa58ea, type: 2}

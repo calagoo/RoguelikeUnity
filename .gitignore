@@ -1,5 +1,6 @@
 .vscode/
 Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
 Logs/
 Temp/
 TestFPS.sln

@@ -84,7 +84,7 @@ PrefabInstance:
       addedObject: {fileID: 7767955724299851257}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52f169b83a735b444a3d600e02ec7dec, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -8466032303244907828}
+      addedObject: {fileID: 4465889979386880681}
   m_SourcePrefab: {fileID: 100100000, guid: 52f169b83a735b444a3d600e02ec7dec, type: 3}
 --- !u!1 &3532198949647647846 stripped
 GameObject:
@@ -140,7 +140,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: 52f169b83a735b444a3d600e02ec7dec, type: 3}
---- !u!114 &-8466032303244907828
+--- !u!114 &4465889979386880681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,15 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3532198949647647846}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a199d36bdd74d14986057d10ba5d15d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b36fc8efc90b8d49ad8efc0d577269f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 20kg Plate
-  itemCategory: 7
-  itemID: 0
-  itemDescription: A calibrated 20kg plate that is exactly 20.0004kg. Every kids
-    dream is to bench press two of these.
-  itemValue: 10
-  isConsumable: 0
-  itemRarity: 0
-  itemWeight: 20
+  itemData: {fileID: 11400000, guid: 0a97e678951c0f74b841806e573001df, type: 2}

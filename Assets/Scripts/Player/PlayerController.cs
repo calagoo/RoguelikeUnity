@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         {
             if (eKeyTimer < grabHoldTime)
             {
-                pickupHandler.pickUpItem(physicsGrabber.grabRange);
+                pickupHandler.PickUpItem(physicsGrabber.grabRange);
             } else
             {
                 physicsGrabber.ReleaseGrab();

@@ -65,10 +65,10 @@ PrefabInstance:
       addedObject: {fileID: 3305094006033889068}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f2f2d1bd05f8b7b42a497dc932fc7194, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3994184808202098923}
+      addedObject: {fileID: 2660313667260786559}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f2f2d1bd05f8b7b42a497dc932fc7194, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1823281643976890796}
+      addedObject: {fileID: 7491026746261539833}
   m_SourcePrefab: {fileID: 100100000, guid: f2f2d1bd05f8b7b42a497dc932fc7194, type: 3}
 --- !u!1 &8096750474349860560 stripped
 GameObject:
@@ -97,7 +97,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: f2f2d1bd05f8b7b42a497dc932fc7194, type: 3}
---- !u!54 &3994184808202098923
+--- !u!54 &2660313667260786559
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +124,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1823281643976890796
+--- !u!114 &7491026746261539833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,17 +133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8096750474349860560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a199d36bdd74d14986057d10ba5d15d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b36fc8efc90b8d49ad8efc0d577269f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Oil Barrel
-  itemCategory: 7
-  itemID: 0
-  itemDescription: "A dented metal barrel sloshing with what might be oil, gasoline,
-    or some cursed mixture of both. Emits faint fumes that probably violate several
-    intergalactic safety codes. Kick it over for a slippery mess, or light it up
-    and pray you\u2019re outside the blast radius."
-  itemValue: 330
-  isConsumable: 0
-  itemRarity: 1
-  itemWeight: 186
+  itemData: {fileID: 11400000, guid: e85b3c5f8ee1eda469a5ffa0af8e4c95, type: 2}
