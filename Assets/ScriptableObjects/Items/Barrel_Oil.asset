@@ -19,9 +19,10 @@ MonoBehaviour:
     intergalactic safety codes. Kick it over for a slippery mess, or light it up
     and pray you\u2019re outside the blast radius."
   baseValue: 330
-  itemrarity: 0
+  rarity: 0
   weight: 186
   icon: {fileID: 0}
   prefab: {fileID: 8096750474349860560, guid: df82d3fc8c6685b48835372437e4850a, type: 3}
   category: 5
   consumableType: 2
+  projectileData: {fileID: 0}

@@ -2,31 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoblinAI : MonoBehaviour
+public class GoblinAI : NPCAI
 {
+    public float walkSpeed = 2f;
+    public float runSpeed = 4f;
 
-    public GameObject enemy;
-    public GameObject player;
-    public float speed = 3f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    readonly NPCAI npcAI;
+
+    // protected override void Start()
+    // {
+    //     npcAI.moveSpeed = walkSpeed;
+    // }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        // If player is within range
-        if (Vector3.Distance(player.transform.position, enemy.transform.position) < 10)
-        {
-            MoveToPlayer();
-        }
-    }
-
-    void MoveToPlayer()
-    {
-        enemy.transform.LookAt(player.transform);
-        enemy.transform.position += enemy.transform.forward * speed * Time.deltaTime;
+        base.Update();
     }
 }

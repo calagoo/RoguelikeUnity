@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563e08bb62744944bafe3675ff8e1fb9, type: 3}
   m_Name: WeightPlate_10kg
   m_EditorClassIdentifier: 
-  id: 1
+  id: 3
   itemName: 10kg Plate
   description: A calibrated 10kg plate. Useful if you are too weak to use the 20kg
     weight.
   baseValue: 0
-  itemrarity: 0
+  rarity: 0
   weight: 10
   icon: {fileID: 0}
   prefab: {fileID: 4476489756669299951, guid: 4b8eec72b31cfb94ca4bf12f7bef1ee0, type: 3}
   category: 8
   consumableType: 0
+  projectileData: {fileID: 0}

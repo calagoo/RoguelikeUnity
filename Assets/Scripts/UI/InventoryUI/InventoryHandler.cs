@@ -16,7 +16,6 @@ public class InventoryHandler : MonoBehaviour
 
     public class InventoryEntry
     {
-        public Item itemData;
         public string itemName;
         public int itemQuantity;
         public int itemRarity;
@@ -35,8 +34,6 @@ public class InventoryHandler : MonoBehaviour
     {
         if (itemDatabase == null)
             itemDatabase = Resources.Load<ItemDatabase>("ItemDatabase");
-
-        itemDatabase.Init();
     }
 
     public void AddItem(ItemData item)
@@ -83,7 +80,7 @@ public class InventoryHandler : MonoBehaviour
         }
         foreach (KeyValuePair<int, int> item in inventoryItemCounts)
         {
-            CreateInventoryItemText(itemDatabase.GetByID(item.Key), item.Value);
+            CreateInventoryItemText(itemDatabase.GetItemByID(item.Key), item.Value);
         }
     }
 
@@ -196,91 +193,89 @@ public class InventoryHandler : MonoBehaviour
         valueText.alignment = TextAlignmentOptions.Center;
     }
 
-    void SortInventoryItems(Dictionary<string, int> itemCount, Dictionary<string, Item> itemData, int sortType)
-    {
-        // Sort types:
-        // 0 = Name (A-Z)
-        // 1 = Name (Z-A)
-        // 2 = Quantity (Low-High)
-        // 3 = Quantity (High-Low)
-        // 4 = Rarity (Low-High)
-        // 5 = Rarity (High-Low)
-        // 6 = Weight (Low-High)
-        // 7 = Weight (High-Low)
-        // 8 = Value (Low-High)
-        // 9 = Value (High-Low)
-        switch (sortType)
-        {
-            case 0:
-                inventoryEntries.Sort((x, y) => x.itemName.CompareTo(y.itemName));
-                break;
-            case 1:
-                inventoryEntries.Sort((x, y) => y.itemName.CompareTo(x.itemName));
-                break;
-            case 2:
-                inventoryEntries.Sort((x, y) => x.itemQuantity.CompareTo(y.itemQuantity));
-                break;
-            case 3:
-                inventoryEntries.Sort((x, y) => y.itemQuantity.CompareTo(x.itemQuantity));
-                break;
-            case 4:
-                inventoryEntries.Sort((x, y) => x.itemRarity.CompareTo(y.itemRarity));
-                break;
-            case 5:
-                inventoryEntries.Sort((x, y) => y.itemRarity.CompareTo(x.itemRarity));
-                break;
-            case 6:
-                inventoryEntries.Sort((x, y) => x.itemWeight.CompareTo(y.itemWeight));
-                break;
-            case 7:
-                inventoryEntries.Sort((x, y) => y.itemWeight.CompareTo(x.itemWeight));
-                break;
-            case 8:
-                inventoryEntries.Sort((x, y) => x.itemValue.CompareTo(y.itemValue));
-                break;
-            case 9:
-                inventoryEntries.Sort((x, y) => y.itemValue.CompareTo(x.itemValue));
-                break;
-            default:
-                Debug.LogWarning("Invalid sort type selected: " + sortType);
-                break;
-        }
+    // void SortInventoryItems(Dictionary<string, int> itemCount, Dictionary<string, Item> itemData, int sortType)
+    // {
+    //     // Sort types:
+    //     // 0 = Name (A-Z)
+    //     // 1 = Name (Z-A)
+    //     // 2 = Quantity (Low-High)
+    //     // 3 = Quantity (High-Low)
+    //     // 4 = Rarity (Low-High)
+    //     // 5 = Rarity (High-Low)
+    //     // 6 = Weight (Low-High)
+    //     // 7 = Weight (High-Low)
+    //     // 8 = Value (Low-High)
+    //     // 9 = Value (High-Low)
+    //     switch (sortType)
+    //     {
+    //         case 0:
+    //             inventoryEntries.Sort((x, y) => x.itemName.CompareTo(y.itemName));
+    //             break;
+    //         case 1:
+    //             inventoryEntries.Sort((x, y) => y.itemName.CompareTo(x.itemName));
+    //             break;
+    //         case 2:
+    //             inventoryEntries.Sort((x, y) => x.itemQuantity.CompareTo(y.itemQuantity));
+    //             break;
+    //         case 3:
+    //             inventoryEntries.Sort((x, y) => y.itemQuantity.CompareTo(x.itemQuantity));
+    //             break;
+    //         case 4:
+    //             inventoryEntries.Sort((x, y) => x.itemRarity.CompareTo(y.itemRarity));
+    //             break;
+    //         case 5:
+    //             inventoryEntries.Sort((x, y) => y.itemRarity.CompareTo(x.itemRarity));
+    //             break;
+    //         case 6:
+    //             inventoryEntries.Sort((x, y) => x.itemWeight.CompareTo(y.itemWeight));
+    //             break;
+    //         case 7:
+    //             inventoryEntries.Sort((x, y) => y.itemWeight.CompareTo(x.itemWeight));
+    //             break;
+    //         case 8:
+    //             inventoryEntries.Sort((x, y) => x.itemValue.CompareTo(y.itemValue));
+    //             break;
+    //         case 9:
+    //             inventoryEntries.Sort((x, y) => y.itemValue.CompareTo(x.itemValue));
+    //             break;
+    //         default:
+    //             Debug.LogWarning("Invalid sort type selected: " + sortType);
+    //             break;
+    //     }
 
-        // Put it back into the itemCount dictionary
-        itemCount.Clear();
-        itemData.Clear();
-        foreach (InventoryEntry entry in inventoryEntries)
-        {
-            itemCount.Add(entry.itemName, entry.itemQuantity);
-            itemData.Add(entry.itemName, entry.itemData);
-        }
-    }
+    //     // Put it back into the itemCount dictionary
+    //     itemCount.Clear();
+    //     itemData.Clear();
+    //     foreach (InventoryEntry entry in inventoryEntries)
+    //     {
+    //         itemCount.Add(entry.itemName, entry.itemQuantity);
+    //         itemData.Add(entry.itemName, entry.itemData);
+    //     }
+    // }
 
-    void AddEntry(Dictionary<string, int> itemCount, Dictionary<string, Item> itemData)
-    {
+    // void AddEntry(Dictionary<string, int> itemCount, Dictionary<string, Item> itemData)
+    // {
 
 
-        // Clear the inventoryEntries list
-        inventoryEntries.Clear();
+    //     // Clear the inventoryEntries list
+    //     inventoryEntries.Clear();
 
-        // First add items to the inventoryEntries list
-        foreach (KeyValuePair<string, int> item in itemCount)
-        {
-            var model = itemData[item.Key].prefabReference;
-            Debug.Log($"Model name: {model.name}, Is prefab: {PrefabUtility.GetPrefabAssetType(model) != PrefabAssetType.NotAPrefab}");
+    //     // First add items to the inventoryEntries list
+    //     foreach (KeyValuePair<string, int> item in itemCount)
+    //     {
+    //         var model = itemData[item.Key].prefabReference;
 
-            InventoryEntry entry = new InventoryEntry();
-            entry.itemData = itemData[item.Key];
-            entry.itemName = item.Key;
-            entry.itemQuantity = item.Value;
-            entry.itemRarity = itemData[item.Key].itemRarity;
-            entry.itemWeight = itemData[item.Key].itemWeight;
-            entry.itemValue = itemData[item.Key].itemValue;
-            Debug.Log("Adding Model");
-            entry.prefabReference = itemData[item.Key].prefabReference;
-            inventoryEntries.Add(entry);
-        }
-    }
+    //         InventoryEntry entry = new InventoryEntry();
+    //         entry.itemData = itemData[item.Key];
+    //         entry.itemName = item.Key;
+    //         entry.itemQuantity = item.Value;
+    //         entry.itemRarity = itemData[item.Key].itemRarity;
+    //         entry.itemWeight = itemData[item.Key].itemWeight;
+    //         entry.itemValue = itemData[item.Key].itemValue;
+    //         entry.prefabReference = itemData[item.Key].prefabReference;
+    //         inventoryEntries.Add(entry);
+    //     }
+    // }
 
     void SelectItem(string itemName)
     {
@@ -293,7 +288,7 @@ public class InventoryHandler : MonoBehaviour
         // InventoryEntry entry = inventoryEntries.Find(x => x.itemName == itemName);
 
         inventoryItems.Remove(id);
-        GameObject instance = Instantiate(itemDatabase.GetByID(id).prefab);
+        GameObject instance = Instantiate(itemDatabase.GetItemByID(id).prefab);
         instance.transform.SetPositionAndRotation(Player.transform.position, Player.transform.rotation);
 
         // Instantiate(item.prefabReference, Player.transform.position, Player.transform.rotation);

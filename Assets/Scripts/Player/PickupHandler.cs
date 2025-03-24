@@ -16,7 +16,9 @@ public class PickupHandler : MonoBehaviour
 
     public void PickUpItem(float grabRange)
     {
-        if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, grabRange))
+        LayerMask layerMask = LayerMask.GetMask("Player");
+        int mask = ~layerMask;
+        if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, grabRange, mask)) // Ignore player layer
         {
             GameObject itemGO = hit.collider.gameObject;
             if (itemGO.layer == 7)
@@ -28,15 +30,6 @@ public class PickupHandler : MonoBehaviour
                     inventory.AddItem(itemData);
                     Destroy(itemGO);
                 }
-
-                // Item itemComponent = itemGO.GetComponent<Item>();
-                // if (itemComponent != null)
-                // {
-                //     // Extract item data BEFORE destroying the GameObject
-                //     inventory.AddItem(itemComponent); // Pass only the data
-                //     Debug.Log("Destroying");
-                //     Destroy(itemGO); // Safe now!
-                // }
             }
         }
     }

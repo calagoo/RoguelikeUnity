@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     public PhysicsGrabber physicsGrabber;
     public PickupHandler pickupHandler;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +51,9 @@ public class PlayerController : MonoBehaviour
 
             // Controls shooting/throwing
             if (Input.GetButtonDown("Fire1"))
+            {   
                 launchProjectile.OnLaunchProjectile(1);
+            }
             // --------------------------
         }
     }
@@ -62,13 +63,14 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         forwardInput = Input.GetAxis("Vertical");
 
-        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90, 90);
 
         yRotation += mouseX;
+        yRotation = yRotation % 360;
 
         // rotate the rigidbody up and down
         // rotate the player around the y axis

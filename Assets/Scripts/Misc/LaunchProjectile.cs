@@ -5,11 +5,10 @@ using UnityEngine.UIElements;
 
 public class LaunchProjectile : MonoBehaviour
 {
-    public GameObject projectilePrefab;
-    public float launchForce = 1000;
-    public float destroyTime = 2;
-    public PlayerMana playerMana;
-
+    public SpellHandler spellHandler;
+    public ThrowHandler throwHandler;
+    public ItemDatabase itemDatabase;
+    public bool isSpell;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,18 +19,34 @@ public class LaunchProjectile : MonoBehaviour
     {
     }
 
-    public void OnLaunchProjectile(float mana)
+    public void OnLaunchProjectile(int ID)
     {
-        // Reduce mana
-        if (playerMana != null && playerMana.Mana >= mana)
+        IGameAsset asset = itemDatabase.GetByID(ID);
+        isSpell = asset is SpellData;
+        if (isSpell)
         {
-            mana = projectilePrefab.GetComponent<ProjectileTestController>().mana;
-            // projectilePrefab.mana = mana;
-            playerMana.TakeDamage(mana);
-            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
-            projectile.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchForce));
-            Destroy(projectile, destroyTime);
+            LaunchSpell(ID);
         }
+        else
+        {
+            LaunchItem(ID);
+        }
+    }
+
+    void LaunchSpell(int ID)
+    {
+        spellHandler.activeSpellData = itemDatabase.GetSpellByID(ID);
+        spellHandler.activeSpellLogic = spellHandler.activeSpellData.spellLogic;
+        Vector3 target = transform.position + transform.forward * 2;
+        spellHandler.CastSpell(target);
+    }
+
+    void LaunchItem(int ID)
+    {
+        throwHandler.activeItemData = itemDatabase.GetItemByID(ID);
+        throwHandler.activeItemLogic = throwHandler.activeItemData.throwLogic;
+        Vector3 target = transform.position + transform.forward * 2;
+        throwHandler.ThrowItem(target);
 
     }
 }

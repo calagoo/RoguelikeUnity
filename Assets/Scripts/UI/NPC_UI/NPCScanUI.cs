@@ -32,7 +32,9 @@ public class NPCScanUI : MonoBehaviour
         // If player is within scan range, looking at npc, and presses E, then show the scan UI
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, 35))
+            LayerMask layerMask = LayerMask.GetMask("Player");
+            int mask = ~layerMask;
+            if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, 35, mask))
             {
                 if (!hit.transform.CompareTag("NPC") && !hit.transform.CompareTag("Enemy"))
                 {

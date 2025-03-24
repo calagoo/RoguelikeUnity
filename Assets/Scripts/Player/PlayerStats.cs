@@ -42,11 +42,7 @@ public class PlayerStats : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject); // Optional: persist between scenes
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
         var statGen = GetComponent<StatGenerator>();
         Dictionary<string, int> stats = statGen.RandomizeStats();
         foreach (var stat in stats)

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 563e08bb62744944bafe3675ff8e1fb9, type: 3}
+  m_Name: Potion_Health
+  m_EditorClassIdentifier: 
+  id: 2
+  itemName: Basic Health Potion
+  description: "A grenade-like bottle of swirling crimson liquid that knits flesh
+    and seals wounds almost instantly. It fizzes slightly when uncorked and tastes
+    just a bit like regret\u2014bitter, sharp, and somehow metallic. Heals minor
+    injuries. Not recommended for flavor enthusiasts.        "
+  baseValue: 20
+  rarity: 0
+  weight: 1
+  icon: {fileID: 0}
+  prefab: {fileID: 516841677676831834, guid: b4982a8b45384e1419bccef1c5d3632f, type: 3}
+  category: 2
+  consumableType: 3
+  projectileData: {fileID: 0}

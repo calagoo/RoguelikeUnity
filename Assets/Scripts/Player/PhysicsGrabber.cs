@@ -23,7 +23,9 @@ public class PhysicsGrabber : MonoBehaviour
     {
         if (isGrabbing) return;
 
-        if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, grabRange))
+        LayerMask layerMask = LayerMask.GetMask("Player");
+        int mask = ~layerMask;
+        if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, grabRange, mask))
         {
             if (hit.collider.gameObject.layer == 7) // Item layer
             {
@@ -48,8 +50,9 @@ public class PhysicsGrabber : MonoBehaviour
             grabberIndicator.SetActive(true);
             return;
         }
-
-        if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, grabRange))
+        LayerMask layerMask = LayerMask.GetMask("Player");
+        int mask = ~layerMask;
+        if (Physics.Raycast(player.transform.position, player.transform.forward, out RaycastHit hit, grabRange, mask))
         {
             if (hit.collider.gameObject.layer == 7)
             {
