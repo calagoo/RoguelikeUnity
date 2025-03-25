@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 563e08bb62744944bafe3675ff8e1fb9, type: 3}
-  m_Name: Grenade
+  m_Name: Explosive_Dynamite_Goblin
   m_EditorClassIdentifier: 
   id: 1
-  itemName: Grenade
-  description: A grenade
-  baseValue: 150
-  rarity: 0
+  itemName: Goblin Dynamite
+  description: A stick of cherry red dynamite. It is sweating with anticipation,
+    the goblins aren't very good craftsmen. Hopefully you don't make any sudden movements
+    while holding this thing...
+  baseValue: 120
+  rarity: 1
   weight: 1
   icon: {fileID: 0}
-  prefab: {fileID: 3162102713564730619, guid: bc4f796ac2c58a74fba3dee788d398ad, type: 3}
+  prefab: {fileID: 5442719941022582682, guid: a3efb5118808e3f4988cb2ae6f9cb929, type: 3}
   category: 0
   consumableType: 0
+  throwLogic: {fileID: 11400000, guid: 49854f934f78ceb438b291342c7d24db, type: 2}
   projectileData: {fileID: 11400000, guid: 50b9f5f85f16d7044a61dc2182b81fc9, type: 2}

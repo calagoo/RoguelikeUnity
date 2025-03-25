@@ -14,7 +14,7 @@ public class MagicMissile : SpellLogic
         rotation *= Quaternion.AngleAxis(-90, Vector3.forward); // Local X axis
         //
 
-        GameObject missile = Instantiate(data.projectileData.projectilePrefab, caster.transform.position, rotation);
+        GameObject missile = Instantiate(data.projectileData.prefab, caster.transform.position, rotation);
         missile.GetComponent<ProjectileHandler>().sourceAsset = data;
 
         missile.GetComponent<Rigidbody>().velocity = dir * data.projectileData.speed;

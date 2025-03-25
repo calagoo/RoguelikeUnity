@@ -25,4 +25,5 @@ MonoBehaviour:
   prefab: {fileID: 516841677676831834, guid: b4982a8b45384e1419bccef1c5d3632f, type: 3}
   category: 2
   consumableType: 3
+  throwLogic: {fileID: 0}
   projectileData: {fileID: 0}

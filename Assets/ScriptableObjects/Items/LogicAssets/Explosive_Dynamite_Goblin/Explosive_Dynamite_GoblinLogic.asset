@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2777489b71ee64f46a2f8131f42c616c, type: 3}
-  m_Name: GrenadeExplosive
+  m_Script: {fileID: 11500000, guid: 43edda236acf1bd4395898c6f141b6e2, type: 3}
+  m_Name: Explosive_Dynamite_GoblinLogic
   m_EditorClassIdentifier: 
-  damage: 120
-  radius: 10
-  duration: 5
-  explosiveType: 0
-  fuseType: 1
-  explosionPrefab: {fileID: 3162102713564730619, guid: bc4f796ac2c58a74fba3dee788d398ad, type: 3}

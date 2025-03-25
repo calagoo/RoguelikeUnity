@@ -29,6 +29,6 @@ public class ProjectileData : ScriptableObject
     public bool isCorporeal; // If true, damage is based off physics
     public MainDamageType mainDamageType;
     public SubDamageType subDamageType;
-    public GameObject projectilePrefab;
+    public GameObject prefab;
     public ExplosiveData explosiveData;
 }
