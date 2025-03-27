@@ -17,4 +17,5 @@ MonoBehaviour:
   duration: 5
   explosiveType: 0
   fuseType: 1
-  prefab: {fileID: 5442719941022582682, guid: a3efb5118808e3f4988cb2ae6f9cb929, type: 3}
+  explosiveVFXDuration: 2
+  explosionVFXPrefab: {fileID: 3348721850509788797, guid: df7c93f6c5f5e7c4ca1f1aee78e4440e, type: 3}

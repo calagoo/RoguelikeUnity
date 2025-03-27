@@ -23,5 +23,6 @@ public class ExplosiveData : ScriptableObject
     public float duration;
     public ExplosiveType explosiveType;
     public FuseType fuseType;
-    public GameObject prefab;
+    public float explosiveVFXDuration;
+    public GameObject explosionVFXPrefab;
 }

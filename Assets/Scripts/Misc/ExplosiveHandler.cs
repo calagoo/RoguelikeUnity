@@ -14,6 +14,11 @@ public class ExplosiveHandler : MonoBehaviour
 
     public void Start()
     {
+        if (explosiveData == null)
+        {
+            return;
+        }
+
         if (explosiveData.fuseType == ExplosiveData.FuseType.Timer)
         {
             StartFuse();
@@ -22,6 +27,7 @@ public class ExplosiveHandler : MonoBehaviour
 
     void Update()
     {
+        if (explosiveData == null) return;
         if (explosiveData.fuseType != ExplosiveData.FuseType.Timer) return;
         
         if (!isFuseLit) return;
@@ -55,6 +61,7 @@ public class ExplosiveHandler : MonoBehaviour
 
     public void Impact()
     {
+        if (explosiveData == null) return;
         if (explosiveData.fuseType == ExplosiveData.FuseType.Impact)
         {
             Detonate();
@@ -72,13 +79,14 @@ public class ExplosiveHandler : MonoBehaviour
         if (hasExploded) return;
         hasExploded = true;
 
-        Debug.Log($"💥 Explosion triggered: {gameObject.name}");
+        if (explosiveData.explosionVFXPrefab != null)
+        {
+            GameObject VFX = Instantiate(explosiveData.explosionVFXPrefab, transform.position, Quaternion.identity);
+            VFX.GetComponent<VisualEffect>().Play();
 
-        // Optional: visual effect
-        // if (explosiveData.explosionVFX != null)
-        // {
-        //     Instantiate(explosiveData.explosionVFX, transform.position, Quaternion.identity);
-        // }
+            // Coroutine to destroy the visual effect after it has finished playing
+            Destroy(VFX, explosiveData.explosiveVFXDuration);
+        }
 
         if (explosiveData.explosiveType == ExplosiveData.ExplosiveType.Physical)
         {

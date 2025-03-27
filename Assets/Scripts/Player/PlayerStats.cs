@@ -31,6 +31,7 @@ public class PlayerStats : MonoBehaviour
     public int constitution;
     public int dexterity;
     public int charisma;
+    public int level = 1;
 
     private void Awake()
     {

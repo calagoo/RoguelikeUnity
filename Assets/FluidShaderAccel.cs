@@ -55,8 +55,6 @@ public class FluidShaderAccel : MonoBehaviour
 
         Vector3 finalAccel = ignoreGravity ? smoothedAccel - Physics.gravity : smoothedAccel;
 
-        Debug.Log("Accel: " + finalAccel + " Fill: " + fillLevel);
-
         material.SetVector("_Accel", finalAccel);
         material.SetFloat("_Fill", fillLevel);
     }

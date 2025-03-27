@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GoblinAI : NPCAI
 {
-    public float walkSpeed = 2f;
-    public float runSpeed = 4f;
+    public float walkSpeed = 2f; // Determine from dex? will always max of 10f
+    public float runSpeed = 4f; // Determine from dex?
 
     readonly NPCAI npcAI;
 

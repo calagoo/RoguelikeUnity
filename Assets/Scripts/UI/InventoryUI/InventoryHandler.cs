@@ -93,10 +93,11 @@ public class InventoryHandler : MonoBehaviour
 
         // Create a panel for the item
         GameObject newItemPanel = Instantiate(itemPanel, content.transform);
+        newItemPanel.GetComponent<Image>().color = Color.clear;
         // Add Button to the panel
         Button button = newItemPanel.AddComponent<Button>();
         // button.onClick.AddListener(() => SelectItem(item.itemName));
-        button.onClick.AddListener(() => RemoveItem(item.id));
+        button.onClick.AddListener(() => HighlightItem(newItemPanel));
 
         // Create a new GameObject for the UI text
         GameObject itemNameObj = new GameObject("ItemName");
@@ -294,5 +295,10 @@ public class InventoryHandler : MonoBehaviour
         // Instantiate(item.prefabReference, Player.transform.position, Player.transform.rotation);
         CountUniqueItems();
         RenderItems();
+    }
+
+    void HighlightItem(GameObject panel)
+    {
+        panel.GetComponent<Image>().color = Color.green;
     }
 }

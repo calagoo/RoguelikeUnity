@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class NPCScanUI : MonoBehaviour
 {
-    // This controls the scanning UI for the player upon the npc
-    public GameObject npcScanUI;
-    public GameObject npcName;
-    public GameObject npcLevel;
-    public GameObject npcDescription;
-    public GameObject player;
-    public EnemyStats enemyStats;
 
+    MobData mobData;
+    // This controls the scanning UI for the player upon the npc
+    public GameObject npcName;
+    public GameObject npcDescription;
+    public GameObject npcLevel;
+    EnemyStats enemyStats;
+
+    public GameObject npcScanUI;
+    public GameObject player;
     // Get camera loc for scanUI
     public GameObject scanCamLocation;
     public GameObject mainCamLocation;
@@ -24,6 +27,9 @@ public class NPCScanUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyStats = transform.GetComponentInParent<EnemyStats>();
+        mobData = enemyStats.mobData;
+
         npcScanUI.SetActive(false);
     }
     // Update is called once per frame
@@ -42,9 +48,9 @@ public class NPCScanUI : MonoBehaviour
                 }
                 // Get data from NPC
                 enemyStats = hit.transform.GetComponent<EnemyStats>();
-                npcName.GetComponent<TMPro.TextMeshProUGUI>().text = enemyStats.enemyName;
-                npcLevel.GetComponent<TMPro.TextMeshProUGUI>().text = "Level: " + enemyStats.enemyLevel;
-                npcDescription.GetComponent<TMPro.TextMeshProUGUI>().text = enemyStats.enemyDescription;
+                npcName.GetComponent<TMPro.TextMeshProUGUI>().text = mobData.mobName;
+                npcLevel.GetComponent<TMPro.TextMeshProUGUI>().text = "Level: " + mobData.mobLevel.ToString();
+                npcDescription.GetComponent<TMPro.TextMeshProUGUI>().text = mobData.mobDescription;
 
                 npcScanUI.SetActive(true);
 

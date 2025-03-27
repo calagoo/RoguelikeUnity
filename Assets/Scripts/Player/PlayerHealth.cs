@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
+    PlayerStats playerStats;
     public float maxHealth = 100;
-    public float lowHealth = 20;
+    public float regenRate = 1;
 
     private float _health = 100;
     public float Health
@@ -22,16 +23,23 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
     }
 
-    public float HealthRegenRate = 1; // Health per minute (in game)
 
     public static event Action<PlayerHealth, float> OnHealthChangedEvent; // New event
+
+    private void Start()
+    {
+        playerStats = GetComponent<PlayerStats>();
+        maxHealth = playerStats.constitution * 25;
+        regenRate = playerStats.constitution;
+        Health = maxHealth;
+    }
 
     private void Update()
     {
         // Natural Regeneration
         if (Health < maxHealth)
         {
-            Heal((HealthRegenRate * Time.deltaTime) / 60); // Regenerate health over time
+            Heal(regenRate * Time.deltaTime / 60); // Regenerate health over time
         }
     }
 

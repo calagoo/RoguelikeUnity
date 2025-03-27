@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2a6caac9281e32443bf41448d435fc6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -148,6 +148,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16c79d047a120d46b26b18e8ed5aac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellDatabase: {fileID: 11400000, guid: 0c6496fe346225d42935bb0e0eff3282, type: 2}
-  itemDatabase: {fileID: 11400000, guid: 8cb5253f70c5f46488cbab411b2af812, type: 2}
-  isSpell: 1
+  explosiveHandler: {fileID: 0}

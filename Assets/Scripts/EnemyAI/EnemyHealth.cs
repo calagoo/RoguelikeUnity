@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
-    public float _health = 100;
-    public float maxHealth = 100;
+    public EnemyStats enemyStats;
+    public float _health;
+    public float maxHealth; // Need this to be enemyStats.constitution * 25
     // low health is 25% of max health
     public float lowHealth = 0.25f;
-    public float regenRate = 1; // Health per minute
+    public float regenRate; // Health per minute
 
     public NPCAI npcAI;
 
@@ -30,7 +31,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemyStats = GetComponent<EnemyStats>();
+        enemyStats.Start();
+        maxHealth = enemyStats.constitution * 25; // Con of 120 = 3000 health
+        regenRate = enemyStats.constitution; // Con of 120 = 120 health per minute, 2 per second
+        _health = maxHealth;
     }
 
     // Update is called once per frame
@@ -46,7 +51,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         //
         // Also if you do do much damage it will evaporate the enemy.
         if (Health <= -maxHealth)
+        {
+            Debug.Log("Enemy Destroyed");
             Destroy(gameObject);
+        }
         else if (Health <= 0)
             npcAI.enabled = false;
         else

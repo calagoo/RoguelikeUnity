@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffa133d1b14752489c8c85c59a01ead, type: 3}
+  m_Name: Goblin
+  m_EditorClassIdentifier: 
+  mobType: 1
+  mobName: Goblin
+  mobDescription: "Goblins are sneaky, explosive-loving menaces with a talent for
+    causing chaos (often at their own expense). Clumped in clans under a War Chieftain\u2014or
+    a particularly reckless Warlord\u2014they fight dirty, loot everything, and cackle
+    in their strange, squeaky language. Take one out, and the rest will be back soon\u2014louder,
+    angrier, and probably on fire."
+  strength: 3
+  intelligence: 2
+  constitution: 2
+  dexterity: 4
+  charisma: 2
+  mobLevel: 2

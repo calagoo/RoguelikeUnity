@@ -31,7 +31,7 @@ public class HealthUIScript : MonoBehaviour
         if (healthSlider != null)
         {
             healthSlider.value = newHealth; // Update the UI slider
-            if (newHealth <= player.lowHealth)
+            if (newHealth <= 0.25f * player.maxHealth)
             {
                 healthSlider.fillRect.GetComponent<Image>().color = Color.red;
             }

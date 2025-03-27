@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     // 
 
     public Rigidbody rb;
-
+    public GameObject playerHead;
     public MainInventory mainInventory;
     public LaunchProjectile launchProjectile;
     public PhysicsGrabber physicsGrabber;
@@ -70,19 +70,17 @@ public class PlayerController : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90, 90);
 
         yRotation += mouseX;
-        yRotation = yRotation % 360;
+        yRotation %= 360;
 
         // rotate the rigidbody up and down
         // rotate the player around the y axis
-        transform.localRotation = Quaternion.Euler(0, yRotation, 0.0f);
+        rb.MoveRotation(Quaternion.Euler(0, yRotation, 0.0f));
+        playerHead.transform.localRotation = Quaternion.Euler(xRotation, 0, 0.0f);
 
-        rb.transform.localRotation = Quaternion.Euler(xRotation, 0, 0.0f);
+        Vector3 moveDirection = 
+            (forwardInput * transform.forward + horizontalInput * transform.right).normalized;
 
-
-        // Move the player forward
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        // Strafe the player
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);   
+        rb.MovePosition(transform.position + speed * Time.deltaTime * moveDirection);
     }
 
     void ItemPickup()
