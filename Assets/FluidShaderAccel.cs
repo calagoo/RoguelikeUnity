@@ -40,7 +40,7 @@ public class FluidShaderAccel : MonoBehaviour
     {
         if (rb == null) return;
 
-        Vector3 currentVelocity = rb.velocity;
+        Vector3 currentVelocity = rb.linearVelocity;
         rawAccel = (currentVelocity - lastVelocity) / Time.fixedDeltaTime;
         lastVelocity = currentVelocity;
     }

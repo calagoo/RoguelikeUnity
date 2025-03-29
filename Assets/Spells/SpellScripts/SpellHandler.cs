@@ -8,9 +8,6 @@ public class SpellHandler : MonoBehaviour
     public SpellData activeSpellData;
     public SpellLogic activeSpellLogic;
     public PlayerMana playerMana;
-    void Awake()
-    {
-    }
 
     public void CastSpell(Vector3 target)
     {

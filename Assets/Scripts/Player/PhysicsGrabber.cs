@@ -80,7 +80,7 @@ public class PhysicsGrabber : MonoBehaviour
 
             Rigidbody rb = currentObject.GetComponent<Rigidbody>();
             float damping = 30f;
-            Vector3 force = distance / grabRange * strengthForce * directionToTarget.normalized - rb.velocity * damping;
+            Vector3 force = distance / grabRange * strengthForce * directionToTarget.normalized - rb.linearVelocity * damping;
             rb.AddForce(force, ForceMode.Force);
         }
     }

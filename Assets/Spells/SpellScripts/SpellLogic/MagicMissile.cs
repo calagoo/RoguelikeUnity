@@ -17,7 +17,7 @@ public class MagicMissile : SpellLogic
         GameObject missile = Instantiate(data.projectileData.prefab, caster.transform.position, rotation);
         missile.GetComponent<ProjectileHandler>().sourceAsset = data;
 
-        missile.GetComponent<Rigidbody>().velocity = dir * data.projectileData.speed;
+        missile.GetComponent<Rigidbody>().linearVelocity = dir * data.projectileData.speed;
 
         GameObject.Destroy(missile, data.projectileData.duration);
     }

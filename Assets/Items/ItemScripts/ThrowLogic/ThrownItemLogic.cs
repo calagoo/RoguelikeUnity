@@ -9,7 +9,7 @@ public class ThrownItem : ThrowLogic
     {
         GameObject ThrownItem = Instantiate(data.projectileData.prefab, caster.transform.position, Quaternion.identity);
         ThrownItem.GetComponent<ProjectileHandler>().sourceAsset = data;
-        ThrownItem.GetComponent<Rigidbody>().velocity = (target - caster.transform.position).normalized * data.projectileData.speed;
+        ThrownItem.GetComponent<Rigidbody>().linearVelocity = (target - caster.transform.position).normalized * data.projectileData.speed;
         GameObject.Destroy(ThrownItem, data.projectileData.duration);
     }
 }

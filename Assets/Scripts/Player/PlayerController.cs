@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10.0f;
+    public float speed = 20.0f;
     public float mouseSensitivity = 250.0f;
     private float horizontalInput;
     private float forwardInput;
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public LaunchProjectile launchProjectile;
     public PhysicsGrabber physicsGrabber;
     public PickupHandler pickupHandler;
+    public HotlistHandler hotlistHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,10 @@ public class PlayerController : MonoBehaviour
             ItemPickup();
             // --------------------------
 
+            // Controls Hotbar selection
+            GetHotbarKey();
+            // --------------------------
+
             // Controls shooting/throwing
             if (Input.GetButtonDown("Fire1"))
             {   
@@ -60,8 +65,8 @@ public class PlayerController : MonoBehaviour
 
     void LookandMove()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        forwardInput = Input.GetAxisRaw("Vertical");
 
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
@@ -105,5 +110,59 @@ public class PlayerController : MonoBehaviour
             eKeyTimer = 0;
         }
         physicsGrabber.UpdateIndicator();
+    }
+
+    void GetHotbarKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            // Select hotbar slot 1
+            hotlistHandler.SelectHotBar(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            // Select hotbar slot 2
+            hotlistHandler.SelectHotBar(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            // Select hotbar slot 3
+            hotlistHandler.SelectHotBar(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            // Select hotbar slot 4
+            hotlistHandler.SelectHotBar(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            // Select hotbar slot 5
+            hotlistHandler.SelectHotBar(4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            // Select hotbar slot 6
+            hotlistHandler.SelectHotBar(5);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            // Select hotbar slot 7
+            hotlistHandler.SelectHotBar(6);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            // Select hotbar slot 8
+            hotlistHandler.SelectHotBar(7);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            // Select hotbar slot 9
+            hotlistHandler.SelectHotBar(8);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            // Select hotbar slot 0
+            hotlistHandler.SelectHotBar(9);
+        }
     }
 }

@@ -20,9 +20,6 @@ public class ThrowHandler : MonoBehaviour
         Debug.LogWarning("❌ activeItemData is not assigned.");
         return;
     }
-
-    Debug.Log($"✅ Throwing item: {activeItemData.itemName} using logic: {activeItemLogic.name}");
-
     activeItemLogic.Execute(gameObject, target, activeItemData);
     }
 
