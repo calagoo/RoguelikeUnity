@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 public class PhysicsGrabber : MonoBehaviour
 {
     public GameObject player;
-    public GameObject grabberIndicator;
-
     public readonly float grabRange = 3f;
     private float strengthForce;
 
     public bool isGrabbing = false;
     private GameObject currentObject;
     private float currentDistance;
+
+    public CrosshairHandler crosshair;
 
     void Update()
     {
@@ -43,11 +44,9 @@ public class PhysicsGrabber : MonoBehaviour
 
     public void UpdateIndicator()
     {
-        if (grabberIndicator == null) return;
-
         if (isGrabbing)
         {
-            grabberIndicator.SetActive(true);
+            crosshair.ActivaeIndicator(true);
             return;
         }
         LayerMask layerMask = LayerMask.GetMask("Player");
@@ -56,12 +55,12 @@ public class PhysicsGrabber : MonoBehaviour
         {
             if (hit.collider.gameObject.layer == 7)
             {
-                grabberIndicator.SetActive(true);
+                crosshair.ActivaeIndicator(true);
                 return;
             }
         }
 
-        grabberIndicator.SetActive(false);
+        crosshair.ActivaeIndicator(false);
     }
 
     void FixedUpdate()

@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public float regenRate = 1;
 
     private float _health = 100;
+    public event Action<PlayerHealth, float> OnHealthChangedEvent; // New event
+
     public float Health
     {
         get { return _health; }
@@ -22,9 +24,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             }
         }
     }
-
-
-    public static event Action<PlayerHealth, float> OnHealthChangedEvent; // New event
 
     private void Start()
     {

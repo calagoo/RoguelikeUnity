@@ -17,13 +17,13 @@ public class HealthUIScript : MonoBehaviour
         }
 
         // Subscribe to health change event
-        PlayerHealth.OnHealthChangedEvent += UpdateHealthUI;
+        // PlayerHealth.OnHealthChangedEvent += UpdateHealthUI;
     }
 
     private void OnDestroy()
     {
         // Unsubscribe from the event to prevent memory leaks
-        PlayerHealth.OnHealthChangedEvent -= UpdateHealthUI;
+        // PlayerHealth.OnHealthChangedEvent -= UpdateHealthUI;
     }
 
     private void UpdateHealthUI(PlayerHealth player, float newHealth)

@@ -1,0 +1,46 @@
+.unity-text-element {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+.unity-tab__header {
+    flex-grow: 1;
+    flex-shrink: 1;
+    align-self: stretch;
+    justify-self: stretch;
+    background-color: rgba(0, 0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+}
+
+.unity-tab__header:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.unity-tab__header-label {
+    color: rgb(220, 220, 220);
+    font-size: 28px;
+}
+
+.unity-tab__header-label:hover {
+    color: rgb(255, 255, 255);
+}
+
+.unity-tab-view__content-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.unity-tab__content-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.unity-multi-column-view__header-container {
+    min-height: 10%;
+}
+
+.hide {
+    display: none;
+}

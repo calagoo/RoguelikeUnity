@@ -1,66 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
+using UnityEngine.UIElements;
+using System.Collections.Generic;
 public class MainInventory : MonoBehaviour
 {
-    public GameObject inventoryParent;
-    public Button[] tabButtons;
-    public GameObject[] tabPanels;
+    public VisualElement ui;
+    public VisualElement InventoryMenu;
+    public InventoryHandler InventoryHandler;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        inventoryParent.SetActive(false);
-        for (int i = 0; i < tabButtons.Length; i++)
-        {
-            int index = i;
-            tabButtons[i].onClick.AddListener(() => SelectPanel(index));
-        }
-
-        // Select first tab by default
-        SelectPanel(0);
-        tabButtons[0].Select();
+        ui = GetComponent<UIDocument>().rootVisualElement;
+        InventoryMenu = ui.Q<VisualElement>("InventoryMenu");
+        InventoryMenu.AddToClassList("hide");
     }
 
-    // Update is called once per frame
     void Update()
     {
-    }
-
-    void SelectPanel(int index)
-    {
-        for (int i = 0; i < tabPanels.Length; i++)
+        // If inventory tab is active
+        if (InventoryMenu.tabIndex == 0 && !InventoryMenu.ClassListContains("hide")) // Only if inventory tab is active
         {
-            if (i == index)
-                tabPanels[i].SetActive(true);
-            else
-                tabPanels[i].SetActive(false);
+            List<InventoryHandler.ItemAttributes> selectedItems = InventoryHandler.GetSelectedItems();
+            if (Input.GetKeyDown(KeyCode.Q))
+                InventoryHandler.RemoveItem(selectedItems);
+            
         }
     }
 
     public void OpenInventory()
     {
-        if (inventoryParent.activeSelf)
+        if (InventoryMenu.ClassListContains("hide"))
         {
-            // Resume the game
-            Time.timeScale = 1;
-
-            // Lock the cursor
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            inventoryParent.SetActive(false);
-        }
-        else
-        {
+            InventoryMenu.RemoveFromClassList("hide");
             // Slow down the game
             Time.timeScale = 0.1f;
 
             // Unlock the cursor
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            inventoryParent.SetActive(true);
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+        }
+        else
+        {
+            InventoryMenu.AddToClassList("hide");
+            // Resume the game
+            Time.timeScale = 1;
+
+            // Lock the cursor
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
         }
     }
 }

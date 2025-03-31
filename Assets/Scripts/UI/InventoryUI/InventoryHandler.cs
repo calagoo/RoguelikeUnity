@@ -1,137 +1,84 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEditor;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+
 
 public class InventoryHandler : MonoBehaviour
 {
     public GameObject Player;
-    public GameObject content;
-    public GameObject itemPanel;
-    public InventorySortingHandler sortingHandler;
-    private List<int> inventoryItems = new List<int>();
-    public Dictionary<int, int> inventoryItemCounts = new Dictionary<int, int>();
-    private readonly int fontSize = 36;
+    private List<int> inventoryItems = new();
+    public Dictionary<int, int> inventoryItemCounts = new();
     public ItemDatabase itemDatabase;
+    public VisualElement ui;
+    public VisualElement InventoryMenu;
+
+    public class ItemAttributes
+    {
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public int Rarity { get; set; }
+        public float Weight { get; set; }
+        public int Value { get; set; }
+        public int ID { get; set; }
+    }
+    public MultiColumnListView inventoryListView;
+    public List<ItemAttributes> inventoryData = new();
 
     void Awake()
     {
+        ui = GetComponent<UIDocument>().rootVisualElement;
+        inventoryListView = ui.Q<MultiColumnListView>("InventoryListView");
+
+        inventoryListView.showBoundCollectionSize = false;
+        inventoryListView.selectionType = SelectionType.Multiple;
+        inventoryListView.virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight;
+
+        // Setup item source
+        inventoryListView.itemsSource = inventoryData;
+
+        // Sorting Columns
+        inventoryListView.sortingMode = ColumnSortingMode.Default;
+
+        // Setup columns
+        inventoryListView.columns["ItemName"].makeCell = () => new Label();
+        inventoryListView.columns["ItemName"].bindCell = (e, i) =>
+            (e as Label).text = inventoryData[i].Name;
+        inventoryListView.columns["ItemName"].comparison = (a, b) =>
+            inventoryData[a].Name.CompareTo(inventoryData[b].Name);
+
+        inventoryListView.columns["ItemQuantity"].makeCell = () => new Label();
+        inventoryListView.columns["ItemQuantity"].bindCell = (e, i) =>
+            (e as Label).text = inventoryData[i].Quantity.ToString();
+        inventoryListView.columns["ItemQuantity"].comparison = (a, b) =>
+            inventoryData[a].Quantity.CompareTo(inventoryData[b].Quantity);
+
+        inventoryListView.columns["ItemRarity"].makeCell = () => new Label();
+        inventoryListView.columns["ItemRarity"].bindCell = (e, i) =>
+            (e as Label).text = GetRarity(inventoryData[i].Rarity);
+        inventoryListView.columns["ItemRarity"].comparison = (a, b) =>
+            inventoryData[a].Rarity.CompareTo(inventoryData[b].Rarity);
+
+        inventoryListView.columns["ItemWeight"].makeCell = () => new Label();
+        inventoryListView.columns["ItemWeight"].bindCell = (e, i) =>
+            (e as Label).text = inventoryData[i].Weight.ToString();
+        inventoryListView.columns["ItemWeight"].comparison = (a, b) =>
+            inventoryData[a].Weight.CompareTo(inventoryData[b].Weight);
+
+        inventoryListView.columns["ItemValue"].makeCell = () => new Label();
+        inventoryListView.columns["ItemValue"].bindCell = (e, i) =>
+            (e as Label).text = inventoryData[i].Value.ToString();
+        inventoryListView.columns["ItemValue"].comparison = (a, b) =>
+            inventoryData[a].Value.CompareTo(inventoryData[b].Value);
+        
+        inventoryListView.columnSortingChanged += OnSortChanged;
+
         if (itemDatabase == null)
             itemDatabase = Resources.Load<ItemDatabase>("ItemDatabase");
     }
 
-    public void AddItem(ItemData item)
+    string GetRarity(int rarityInt)
     {
-        // Add the item to the inventoryItems list
-        inventoryItems.Add(item.id);
-
-        // Add the item to the inventoryItemCounts dictionary
-        CountUniqueItems();
-        sortingHandler.SortInventoryItems_IH();
-
-        // Render the items
-        RenderItems();
-    }
-
-    void CountUniqueItems()
-    {
-        inventoryItemCounts.Clear();
-        foreach (int id in inventoryItems)
-        {
-            if (inventoryItemCounts.ContainsKey(id))
-            {
-                inventoryItemCounts[id]++;
-            }
-            else
-            {
-                inventoryItemCounts.Add(id, 1);
-            }
-        }
-    }
-
-    public void RenderItems()
-    {
-        // Clear the content panel
-        foreach (Transform child in content.transform)
-        {
-            Destroy(child.gameObject);
-        }
-        foreach (KeyValuePair<int, int> item in inventoryItemCounts)
-        {
-            CreateInventoryItemText(itemDatabase.GetItemByID(item.Key), item.Value);
-        }
-    }
-
-    void CreateInventoryItemText(ItemData item, int count)
-    {
-        if (content == null)
-        {
-            return;
-        }
-
-        // Create a panel for the item
-        GameObject newItemPanel = Instantiate(itemPanel, content.transform);
-        newItemPanel.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.0f);
-        // Add Button to the panel
-        Button button = newItemPanel.AddComponent<Button>();
-        // button.onClick.AddListener(() => SelectItem(item.itemName));
-        button.onClick.AddListener(() => HighlightItem(newItemPanel));
-
-        // Create a new GameObject for the UI text
-        GameObject itemNameObj = new GameObject("ItemName");
-        GameObject itemQuantityObj = new GameObject("ItemQuantity");
-        GameObject itemRarityObj = new GameObject("ItemRarity");
-        GameObject itemWeightObj = new GameObject("ItemWeight");
-        GameObject itemValueObj = new GameObject("ItemValue");
-
-        // Set it as a child of the UI content panel
-        itemNameObj.transform.SetParent(newItemPanel.transform);
-        itemQuantityObj.transform.SetParent(newItemPanel.transform);
-        itemRarityObj.transform.SetParent(newItemPanel.transform);
-        itemWeightObj.transform.SetParent(newItemPanel.transform);
-        itemValueObj.transform.SetParent(newItemPanel.transform);
-
-        // Add a TextMeshProUGUI component
-        TextMeshProUGUI nameText = itemNameObj.AddComponent<TextMeshProUGUI>();
-        TextMeshProUGUI quantityText = itemQuantityObj.AddComponent<TextMeshProUGUI>();
-        TextMeshProUGUI rarityText = itemRarityObj.AddComponent<TextMeshProUGUI>();
-        TextMeshProUGUI weightText = itemWeightObj.AddComponent<TextMeshProUGUI>();
-        TextMeshProUGUI valueText = itemValueObj.AddComponent<TextMeshProUGUI>();
-
-        // Set the size of the text
-        nameText.rectTransform.sizeDelta = new Vector2(600, 0); // Vertical Is inherited
-        quantityText.rectTransform.sizeDelta = new Vector2(160, 50);
-        rarityText.rectTransform.sizeDelta = new Vector2(350, 50);
-        weightText.rectTransform.sizeDelta = new Vector2(180, 50);
-        valueText.rectTransform.sizeDelta = new Vector2(180, 50);
-
-        // Set the scale of the text
-        nameText.rectTransform.localScale = new Vector3(1, 1, 1);
-        quantityText.rectTransform.localScale = new Vector3(1, 1, 1);
-        rarityText.rectTransform.localScale = new Vector3(1, 1, 1);
-        weightText.rectTransform.localScale = new Vector3(1, 1, 1);
-        valueText.rectTransform.localScale = new Vector3(1, 1, 1);
-
-        // Set the text to the item's name
-        nameText.text = item.itemName;
-        nameText.overflowMode = TextOverflowModes.Ellipsis;
-        nameText.fontSize = fontSize;
-        nameText.color = Color.white;
-        nameText.verticalAlignment = VerticalAlignmentOptions.Middle;
-        nameText.horizontalAlignment = HorizontalAlignmentOptions.Left;
-
-        // Set the text to the item's quantity
-        quantityText.text = count.ToString();
-        quantityText.overflowMode = TextOverflowModes.Ellipsis;
-        quantityText.fontSize = fontSize;
-        quantityText.color = Color.white;
-        quantityText.verticalAlignment = VerticalAlignmentOptions.Middle;
-        quantityText.horizontalAlignment = HorizontalAlignmentOptions.Right;        
-
-        // Set the text to the item's rarity
-        int rarityInt = item.rarity;
         string rarityString = "Trash";
         switch (rarityInt) // Slightly different rarities than loot boxes
         {
@@ -150,53 +97,145 @@ public class InventoryHandler : MonoBehaviour
             case 4:
                 rarityString = "Legendary";
                 break;
-            default:
+            case 5:
                 rarityString = "Celestial";
                 break;
         }
-
-        rarityText.text = rarityString;
-        rarityText.overflowMode = TextOverflowModes.Ellipsis;
-        rarityText.fontSize = fontSize;
-        rarityText.color = Color.white;
-        rarityText.verticalAlignment = VerticalAlignmentOptions.Middle;
-        rarityText.horizontalAlignment = HorizontalAlignmentOptions.Right;
-
-        // Set the text to the item's weight
-        weightText.text = item.weight.ToString();
-        weightText.overflowMode = TextOverflowModes.Ellipsis;
-        weightText.fontSize = fontSize;
-        weightText.color = Color.white;
-        weightText.verticalAlignment = VerticalAlignmentOptions.Middle;
-        weightText.horizontalAlignment = HorizontalAlignmentOptions.Right;
-
-        // Set the text to the item's value
-        valueText.text = item.baseValue.ToString();
-        valueText.overflowMode = TextOverflowModes.Ellipsis;
-        valueText.fontSize = fontSize;
-        valueText.color = Color.white;
-        valueText.verticalAlignment = VerticalAlignmentOptions.Middle;
-        valueText.horizontalAlignment = HorizontalAlignmentOptions.Right;
-
+        return rarityString;
     }
 
-    void SelectItem(string itemName)
+    void OnSortChanged()
     {
-        Debug.Log("Selected item: " + itemName);
+        if (inventoryListView.sortedColumns.Count() == 0)
+            return;
+
+        var sortedColumns = inventoryListView.sortedColumns;
+        foreach (var column in sortedColumns.Reverse())
+        {
+            var columnName = column.columnName;
+            var direction = column.direction;
+            Debug.Log($"Sorting by {columnName} in {direction} order");
+            SortColumn(columnName, direction);
+        }
+
+        // Manually sync the itemsSource (not needed if it's already bound to inventoryData)
+        inventoryListView.Rebuild();
     }
 
-    void RemoveItem(int id, int count = 1)
+    void SortColumn(string columnName, SortDirection direction)
     {
-        inventoryItems.Remove(id);
-        GameObject instance = Instantiate(itemDatabase.GetItemByID(id).prefab);
-        instance.transform.SetPositionAndRotation(Player.transform.position, Player.transform.rotation);
+        // Sort the inventoryData based on the column name and direction
+        // Replace inventoryItems with the sorted data
 
+        inventoryData.Sort((a, b) =>
+        {
+            return columnName switch
+            {
+                "ItemName" => direction == SortDirection.Ascending
+                                        ? a.Name.CompareTo(b.Name)
+                                        : b.Name.CompareTo(a.Name),
+                "ItemQuantity" => direction == SortDirection.Ascending
+                                        ? a.Quantity.CompareTo(b.Quantity)
+                                        : b.Quantity.CompareTo(a.Quantity),
+                "ItemRarity" => direction == SortDirection.Ascending
+                                        ? a.Rarity.CompareTo(b.Rarity)
+                                        : b.Rarity.CompareTo(a.Rarity),
+                "ItemWeight" => direction == SortDirection.Ascending
+                                        ? a.Weight.CompareTo(b.Weight)
+                                        : b.Weight.CompareTo(a.Weight),
+                "Value" => direction == SortDirection.Ascending
+                                        ? a.Value.CompareTo(b.Value)
+                                        : b.Value.CompareTo(a.Value),
+                _ => 0,
+            };
+        });
+
+        // Update the inventoryItems with the sorted data
+        inventoryItems.Clear();
+        foreach (var item in inventoryData)
+        {
+            for (int i = 0; i < item.Quantity; i++)
+            {
+                inventoryItems.Add(item.ID);
+            }
+        }
+        CountUniqueItems(); // Recalculate unique items after sorting
+    }
+
+
+    public void AddItem(ItemData item)
+    {
+        inventoryItems.Add(item.id);
         CountUniqueItems();
-        RenderItems();
     }
 
-    void HighlightItem(GameObject panel)
+    void CountUniqueItems()
     {
-        panel.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.1f);
+        inventoryItemCounts.Clear();
+        foreach (int id in inventoryItems)
+        {
+            if (inventoryItemCounts.ContainsKey(id))
+            {
+                inventoryItemCounts[id]++;
+            }
+            else
+            {
+                inventoryItemCounts.Add(id, 1);
+            }
+        }
+        UpdateInventoryListView();
+    }
+
+    void UpdateInventoryListView()
+    {
+        inventoryData.Clear();
+        foreach (var pair in inventoryItemCounts)
+        {
+            var item = itemDatabase.GetItemByID(pair.Key);
+            inventoryData.Add(new ItemAttributes
+            {
+                Name = item.itemName,
+                Quantity = pair.Value,
+                Rarity = item.rarity,
+                Weight = item.weight,
+                Value = item.baseValue,
+                ID = item.id
+            });
+        }
+        inventoryListView.Rebuild(); // Triggers refresh
+    }
+
+    public void RemoveItem(IEnumerable<ItemAttributes> selectedItems, int count = 1)
+    {
+        // Get ID's from selected items
+        foreach (ItemAttributes item in selectedItems)
+        {
+            int id = item.ID;
+            if (inventoryItemCounts.ContainsKey(id))
+            {
+                inventoryItems.Remove(id);
+                GameObject instance = Instantiate(itemDatabase.GetItemByID(id).prefab);
+                instance.transform.SetPositionAndRotation(Player.transform.position, Player.transform.rotation);
+            }
+        }
+        CountUniqueItems();
+    }
+
+    public List<ItemAttributes> GetSelectedItems()
+    {
+        var selectedItems = new List<ItemAttributes>();
+
+        foreach (int index in inventoryListView.selectedIndices)
+        {
+            if (index >= 0 && index < inventoryListView.itemsSource.Count)
+            {
+                var selected = inventoryListView.itemsSource[index] as ItemAttributes;
+                if (selected != null)
+                {
+                    selectedItems.Add(selected);
+                }
+            }
+        }
+        return selectedItems.Count > 0 ? selectedItems : null;
     }
 }

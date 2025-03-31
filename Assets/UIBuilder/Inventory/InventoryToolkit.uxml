@@ -1,0 +1,57 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIBuilder/Inventory/InventoryMenu.uss?fileID=7433441132597879392&amp;guid=a5fa0a0f9d2801d47ba567600fa727f6&amp;type=3#InventoryMenu" />
+    <engine:VisualElement name="panel" style="flex-grow: 1;">
+        <engine:VisualElement name="InventoryMenu" style="background-color: rgba(19, 19, 19, 0.96); margin-top: 10%; margin-right: 10%; margin-bottom: 10%; margin-left: 10%; flex-grow: 1; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px;">
+            <engine:TabView style="flex-grow: 1; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Electrolize/Electrolize-Regular.ttf?fileID=12800000&amp;guid=e803b207d0d52b448910df9b4ea27e48&amp;type=3#Electrolize-Regular&quot;);">
+                <engine:Tab label="Inventory" name="TabInventory" style="min-height: 100%;">
+                    <engine:VisualElement name="InventoryTabContent" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.56); flex-direction: row;">
+                        <engine:VisualElement name="InventoryMainArea" style="flex-grow: 1; background-color: rgba(255, 0, 0, 0.56); flex-direction: column; border-bottom-right-radius: 0; border-bottom-left-radius: 0; margin-top: 14px; margin-right: 2px; margin-left: 2px; border-top-left-radius: 0; border-top-right-radius: 0;">
+                            <engine:VisualElement name="SearchFilterPanel" style="flex-grow: 1; background-color: rgba(255, 0, 0, 0.56); max-height: 10%;" />
+                            <engine:VisualElement name="InventorySubcategories" style="flex-grow: 1; background-color: rgba(0, 255, 34, 0.56);" />
+                        </engine:VisualElement>
+                        <engine:VisualElement name="InventoryItems" style="flex-grow: 1; background-color: rgba(239, 0, 255, 0.56); border-bottom-right-radius: 0; max-width: 70%; margin-top: 15px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-left-radius: 0; margin-left: 2px; margin-right: 2px;">
+                            <engine:MultiColumnListView name="InventoryListView" style="flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                                <engine:Columns>
+                                    <engine:Column name="ItemName" width="35%" title="Name" />
+                                    <engine:Column name="ItemQuantity" width="15%" title="Quantity" />
+                                    <engine:Column name="ItemRarity" width="20%" title="Rarity" />
+                                    <engine:Column name="ItemWeight" width="15%" title="Weight" />
+                                    <engine:Column name="ItemValue" width="15%" title="Value" />
+                                </engine:Columns>
+                            </engine:MultiColumnListView>
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                    <engine:VisualElement name="SelectionKeybinds" style="max-height: 8%; margin-right: 20px; margin-left: 20px; flex-direction: row; justify-content: flex-end;">
+                        <engine:VisualElement name="TabLabel" style="padding-right: 10px; padding-left: 10px;">
+                            <engine:Label text="[Tab] Close" />
+                        </engine:VisualElement>
+                        <engine:VisualElement name="TabLabel" style="padding-right: 10px; padding-left: 10px;">
+                            <engine:Label text="[Q] Drop" />
+                        </engine:VisualElement>
+                        <engine:VisualElement name="TabLabel" style="padding-right: 10px; padding-left: 10px;">
+                            <engine:Label text="[I] Inspect" />
+                        </engine:VisualElement>
+                        <engine:VisualElement name="TabLabel" style="padding-right: 10px; padding-left: 10px;">
+                            <engine:Label text="[F] Use" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:Tab>
+                <engine:Tab label="Player" name="TabPlayerInfo" tabindex="1">
+                    <engine:Label text="Player Test Tab" />
+                </engine:Tab>
+                <engine:Tab label="Quests" name="TabQuests" tabindex="2">
+                    <engine:Label text="Quests Test Tab" />
+                </engine:Tab>
+                <engine:Tab label="Messages" name="TabMessages" tabindex="3">
+                    <engine:Label text="Messages Test Tab" />
+                </engine:Tab>
+                <engine:Tab label="Boxes and Awards" name="TabBoxesAwards" tabindex="4">
+                    <engine:Label text="Boxes and Awards Test Tab" />
+                </engine:Tab>
+                <engine:Tab label="Achievements" name="TabAchievements" tabindex="5">
+                    <engine:Label text="Achievements Test Tab" />
+                </engine:Tab>
+            </engine:TabView>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

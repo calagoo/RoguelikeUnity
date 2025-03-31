@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
             mainInventory.OpenInventory();
 
-        if (!mainInventory.inventoryParent.activeSelf) // If the inventory is not open
+        if (!IsInventoryOpen()) // If the inventory is not open
         {
             // Controls view and movement
             LookandMove();
@@ -110,6 +110,11 @@ public class PlayerController : MonoBehaviour
             eKeyTimer = 0;
         }
         physicsGrabber.UpdateIndicator();
+    }
+
+    bool IsInventoryOpen()
+    {
+        return !mainInventory.InventoryMenu.ClassListContains("hide");
     }
 
     void GetHotbarKey()
