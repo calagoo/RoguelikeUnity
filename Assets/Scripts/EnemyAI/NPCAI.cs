@@ -1,17 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCAI : MonoBehaviour
 {
+    [HideInInspector]
     public float visionRange;
+    [HideInInspector]
+    public float visionAngle;
+    [HideInInspector]
     public float moveSpeed;
+    [HideInInspector]
+    public float reactionTime;
+    [HideInInspector]
     public float rotationSpeed;
+    public Skills skills;
+    public EnemyStats stats;
+    Dictionary<Skills.PassiveSkills, int> passiveSkills;
+    public NavMeshAgent agent;
     protected Transform target;
     private Rigidbody rb;
     private Vector3 top;
     protected virtual void Start()
     {
+        GenerateSkills();
+        SkillsToStats(passiveSkills);
         target = GameObject.FindGameObjectWithTag("Player")?.transform;
         rb = GetComponent<Rigidbody>();
         // Top using collider
@@ -21,7 +36,16 @@ public class NPCAI : MonoBehaviour
     protected virtual void Update()
     {
         if (target != null && Vector3.Distance(transform.position, target.position) < visionRange)
-            MoveTowards(target.position);
+        {
+            // Check if player is within vision angle
+            Vector3 dirToPlayer = (target.position - transform.position).normalized;
+            float angleToPlayer = Vector3.Angle(transform.forward, dirToPlayer);
+            if (angleToPlayer < visionAngle / 2)
+            {
+                // Player is within vision angle, move towards them
+                MoveTowards(target.position);
+            }
+        }
     }
 
     protected void MoveTowards(Vector3 position)
@@ -107,5 +131,31 @@ public class NPCAI : MonoBehaviour
         moveSpeed = 0;
         yield return new WaitForSeconds(duration);
         moveSpeed = 2f;
+    }
+
+    // Generate passive skills and use to deteremine stats
+    void GenerateSkills()
+    {
+        passiveSkills = skills.GeneratePassiveSkills();
+    }
+
+    void SkillsToStats(Dictionary<Skills.PassiveSkills, int> passiveSkills)
+    {
+        // Default Skill Value == 4
+        // View Distance from perception (Default == 50f) (0-100f)
+        // View Angle from perception (Default == 45f) (0-180f)
+        // Reaction time from reflex (Default == 0.5f)
+        // Likelihood of retreating from willpower (Default == 0.5f (50% chance of retreating when low health))
+        // Accuracy from precision (Default == 0.5f (50% chance of hitting))
+        // Likelihood of resisting fear from resolve (Default == 0.5f (50% chance of resisting fear))
+
+        // Move Speed is based on dexterity and strength (Default == 8f)
+
+        visionRange = 50f + (passiveSkills[Skills.PassiveSkills.Perception] - 4) * 5f; // 0-100f
+        visionAngle = 45f + (passiveSkills[Skills.PassiveSkills.Perception] - 4) * 1.5f; // 0-180f
+        reactionTime = 0.5f - (passiveSkills[Skills.PassiveSkills.Reflex] - 4) * 0.05f; // 0-1f
+        moveSpeed = Math.Clamp(8f + (stats.dexterity - 4) * 0.5f, 2, 20); // 0-10f
+
+        
     }
 }

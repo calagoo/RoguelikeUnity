@@ -104,7 +104,7 @@ public class InventoryHandler : MonoBehaviour
         return rarityString;
     }
 
-    void OnSortChanged()
+    public void OnSortChanged()
     {
         if (inventoryListView.sortedColumns.Count() == 0)
             return;
@@ -114,7 +114,6 @@ public class InventoryHandler : MonoBehaviour
         {
             var columnName = column.columnName;
             var direction = column.direction;
-            Debug.Log($"Sorting by {columnName} in {direction} order");
             SortColumn(columnName, direction);
         }
 
@@ -161,7 +160,6 @@ public class InventoryHandler : MonoBehaviour
         }
         CountUniqueItems(); // Recalculate unique items after sorting
     }
-
 
     public void AddItem(ItemData item)
     {
@@ -219,6 +217,7 @@ public class InventoryHandler : MonoBehaviour
             }
         }
         CountUniqueItems();
+        OnSortChanged(); // Sort the inventory items before counting unique items
     }
 
     public List<ItemAttributes> GetSelectedItems()
@@ -229,13 +228,35 @@ public class InventoryHandler : MonoBehaviour
         {
             if (index >= 0 && index < inventoryListView.itemsSource.Count)
             {
-                var selected = inventoryListView.itemsSource[index] as ItemAttributes;
-                if (selected != null)
+                if (inventoryListView.itemsSource[index] is ItemAttributes selected)
                 {
                     selectedItems.Add(selected);
                 }
             }
         }
         return selectedItems.Count > 0 ? selectedItems : null;
+    }
+
+    public void ClearSelectedItems()
+    {
+        inventoryListView.SetSelection(new List<int>()); // Clear selection
+    }
+
+    public void AddToHotlist(ItemAttributes item, int hotlistSlot)
+    {
+        // Add item to hotlist slot
+        // hotlistHandler.AddToHotlist(item, hotlistSlot);
+        Debug.Log($"Added {item.Name} to hotlist slot {hotlistSlot}");
+    }
+
+    public void UseItem(ItemAttributes item)
+    {
+        // Use item logic here
+        Debug.Log("Item used " + item.Name);
+    }
+    public void InspectItem(ItemAttributes item)
+    {
+        // Inspect item logic here
+        Debug.Log("Item inspected " + item.Name);
     }
 }
